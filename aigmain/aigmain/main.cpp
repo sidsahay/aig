@@ -4,7 +4,7 @@
 
 class DummyAgent : public aig::IAgent<aig::DummyGame>
 {
-    virtual aig::DummyGame::CommandT Decide(const aig::DummyGame::StateT& state, const double elapsed_time) override
+    virtual CommandT Decide(const StateT& state, const double elapsed_time) override
     {
         //Pump out all them events.
         while (EventsAvailable())
@@ -38,7 +38,6 @@ int main(int argc, char **argv)
 
     system.CreateGameWindow("Dummy Game", 600, 600);
     system.RunGame();
-
 
     return 0;
 }

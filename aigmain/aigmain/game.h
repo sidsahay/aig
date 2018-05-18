@@ -12,6 +12,10 @@ namespace aig
     class IAgent : public Observer<typename GameT>
     {
         public:
+        using CommandT = typename GameT::CommandT;
+        using StateT = typename GameT::StateT;
+        using EventT = typename GameT::EventT;
+
         virtual typename GameT::CommandT Decide(const typename GameT::StateT& state, const double elapsed_time) = 0;
         void SetId(int id);
 
