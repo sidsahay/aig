@@ -3,19 +3,16 @@
 #include <chrono>
 
 #include "graphics.h"
+#include "observer.h"
+#include "observer_impl.h"
 
 namespace aig
 {
-    class IGameState
+    template <typename GameT>
+    class IAgent : public Observer<typename GameT>
     {
         public:
-        virtual double GetProperty(const std::string& prop_name, const int id) const = 0;
-    };
-
-    class IAgent
-    {
-        public:
-        virtual int Decide(const IGameState& state, const double elapsed_time) = 0;
+        virtual typename GameT::CommandT Decide(const typename GameT::StateT& state, const double elapsed_time) = 0;
         void SetId(int id);
 
         protected:
@@ -26,7 +23,7 @@ namespace aig
     class GameSystem
     {
         public:
-        void RegisterAgent(IAgent* agent);
+        void RegisterAgent(IAgent<GameT>* agent);
         
         void CreateGameWindow(const char *title, int width, int height);
         void RunGame();
@@ -34,7 +31,7 @@ namespace aig
         ~GameSystem();
 
         private:
-        std::vector<IAgent*> _agents;
+        std::vector<IAgent<GameT>*> _agents;
         Graphics* _graphics = nullptr;
         int _counter = 0;
     };

@@ -1,10 +1,17 @@
+#include <iostream>
+
 #include "dummy.h"
 
-class DummyAgent : public aig::IAgent
+class DummyAgent : public aig::IAgent<aig::DummyGame>
 {
-    // Inherited via IAgent
-    virtual int Decide(const aig::IGameState & state, const double elapsed_time) override
+    virtual aig::DummyGame::CommandT Decide(const aig::DummyGame::StateT& state, const double elapsed_time) override
     {
+        //Pump out all them events.
+        while (EventsAvailable())
+        {
+            std::cout << GetEvent() << std::endl;
+        }
+
         double x_position = state.GetProperty("x_position", _id);
 
         if (x_position < -800.)
@@ -26,7 +33,7 @@ int main(int argc, char **argv)
 {
     aig::GameSystem<aig::DummyGame> system;
     
-    aig::IAgent* my_agent = new DummyAgent;
+    aig::IAgent<aig::DummyGame>* my_agent = new DummyAgent;
     system.RegisterAgent(my_agent);
 
     system.CreateGameWindow("Dummy Game", 600, 600);

@@ -12,11 +12,12 @@ double aig::DummyGameState::GetProperty(const std::string & prop_name, const int
     }
 }
 
-aig::DummyGame::DummyGame(const std::vector<IAgent*>& agents, Graphics * graphics)
+aig::DummyGame::DummyGame(const std::vector<IAgent<DummyGame>*>& agents, Graphics * graphics)
 {
     if (agents.size() > 0)
     {
         _player = agents[0];
+        _observation_target.AddObserver(_player);
     }
 
     _graphics = graphics;
@@ -38,10 +39,12 @@ void aig::DummyGame::UpdateState(double elapsed_time)
     {
     case DUMMY_GO_LEFT:
         _game_state._x_velocity = -100.;
+        _observation_target.Broadcast(_command);
         break;
 
     case DUMMY_GO_RIGHT:
         _game_state._x_velocity = 100.;
+        _observation_target.Broadcast(_command);
         break;
 
     default:

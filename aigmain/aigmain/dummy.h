@@ -4,17 +4,17 @@
 
 namespace aig
 {
-    enum DummyCommands
+    enum DummyCommand
     {
         DUMMY_GO_LEFT,
         DUMMY_GO_RIGHT,
         DUMMY_DO_NOTHING
     };
 
-    class DummyGameState : public IGameState
+    class DummyGameState
     {
         public:
-        virtual double GetProperty(const std::string & prop_name, const int id) const override;
+        double GetProperty(const std::string & prop_name, const int id) const;
         friend class DummyGame;
 
         private:
@@ -25,7 +25,11 @@ namespace aig
     class DummyGame
     {
         public:
-        DummyGame(const std::vector<IAgent*>& agents, Graphics *graphics);
+        using CommandT = DummyCommand;
+        using StateT = DummyGameState;
+        using EventT = int;
+
+        DummyGame(const std::vector<IAgent<DummyGame>*>& agents, Graphics *graphics);
 
         void Initialize();
 
@@ -38,8 +42,11 @@ namespace aig
 
         private:
         DummyGameState _game_state;
-        IAgent* _player = nullptr;
+        IAgent<DummyGame>* _player = nullptr;
         Graphics *_graphics = nullptr;
-        int _command = DUMMY_DO_NOTHING;
+        DummyCommand _command = DUMMY_DO_NOTHING;
+
+        //Component, not superclass, because it would create a type deduction cycle otherwise.
+        ObservationTarget<DummyGame> _observation_target;
     };
 }

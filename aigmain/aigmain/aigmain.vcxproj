@@ -23,10 +23,11 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="game_impl.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="observer.h" />
+    <ClInclude Include="observer_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
-    <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

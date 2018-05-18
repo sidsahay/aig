@@ -2,7 +2,13 @@
 #include "game.h"
 
 template <typename GameT>
-void aig::GameSystem<GameT>::RegisterAgent(IAgent * agent)
+void aig::IAgent<GameT>::SetId(int id)
+{
+    _id = id;
+}
+
+template <typename GameT>
+void aig::GameSystem<GameT>::RegisterAgent(IAgent<GameT> * agent)
 {
     //TODO use a PRNG here to generate a proper GUID. Or some other form of GUID generation.
     agent->SetId(_counter);
