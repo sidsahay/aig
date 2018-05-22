@@ -10,6 +10,7 @@ add_executable(aigmain
         aigmain/aigmain/observer.h
         aigmain/aigmain/observer_impl.h
         aigmain/aigmain/geometry.h
+        aigmain/aigmain/geometry.cpp
         aigmain/aigmain/physics.h
         aigmain/aigmain/physics.cpp
         aigmain/aigmain/game.h
