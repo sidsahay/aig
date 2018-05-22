@@ -1,5 +1,12 @@
 #pragma once
-#include <SDL.h>
+
+//Heck yeah, jugaad ftw
+//Fixes SDL.h not found on Linux.
+#ifdef _WIN32
+    #include <SDL.h>
+#else
+    #include <SDL2/SDL.h>
+#endif
 
 namespace aig
 {

@@ -61,8 +61,8 @@ namespace aig
     {
         int size_x_actual = (size_x * width) / (2 * _x_extent);
         int size_y_actual = (size_y * height) / (2 * _y_extent);
-        int x_actual = ((x + _x_extent) / (2 * _x_extent)) * width - size_x_actual;
-        int y_actual = ((-y + _y_extent) / (2 * _y_extent)) * height - size_y_actual;
+        int x_actual = ((x + _x_extent) / (2 * _x_extent)) * width - size_x_actual/2;
+        int y_actual = ((-y + _y_extent) / (2 * _y_extent)) * height - size_y_actual/2;
 
         SDL_Rect r {x_actual, y_actual, size_x_actual, size_y_actual};
         SDL_RenderFillRect(_renderer, &r);

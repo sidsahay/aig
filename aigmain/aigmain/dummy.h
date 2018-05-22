@@ -33,6 +33,8 @@ namespace aig
 
         void Initialize();
 
+        void PreProcess();
+
         void RunAi(double elapsed_time);
         void UpdateState(double elapsed_time);
         

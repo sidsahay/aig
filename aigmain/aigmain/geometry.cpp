@@ -23,3 +23,4 @@ void aig::Circle::SetRadius(double r)
     bounding_box_extent.x = r;
     bounding_box_extent.y = r;
 }
+

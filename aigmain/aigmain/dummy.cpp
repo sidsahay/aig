@@ -17,7 +17,7 @@ aig::DummyGame::DummyGame(const std::vector<IAgent<DummyGame>*>& agents, Graphic
     if (agents.size() > 0)
     {
         _player = agents[0];
-        _observation_target.AddObserver(_player);
+        _observation_target.AddObserver(&(_player->observer));
     }
 
     _graphics = graphics;
@@ -26,6 +26,10 @@ aig::DummyGame::DummyGame(const std::vector<IAgent<DummyGame>*>& agents, Graphic
 void aig::DummyGame::Initialize()
 {
     _game_state._x_velocity = 100.;
+}
+
+void aig::DummyGame::PreProcess()
+{
 }
 
 void aig::DummyGame::RunAi(double elapsed_time)

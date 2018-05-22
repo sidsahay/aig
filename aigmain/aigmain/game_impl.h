@@ -7,6 +7,11 @@ void aig::IAgent<GameT>::SetId(int id)
     _id = id;
 }
 
+template<typename GameT>
+inline aig::IAgent<GameT>::~IAgent()
+{
+}
+
 template <typename GameT>
 void aig::GameSystem<GameT>::RegisterAgent(IAgent<GameT> * agent)
 {
@@ -34,6 +39,7 @@ void aig::GameSystem<GameT>::RunGame()
     GameT game(_agents, _graphics);
     game.Initialize();
 
+    //Simple game loop
     while (!game.HasEnded())
     {
         high_resolution_clock::time_point 
@@ -43,6 +49,7 @@ void aig::GameSystem<GameT>::RunGame()
         double elapsed_time = span.count();
         previous_time = current_time;
 
+        game.PreProcess();
         game.RunAi(elapsed_time);
         game.UpdateState(elapsed_time);
         game.Render();

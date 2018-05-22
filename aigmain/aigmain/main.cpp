@@ -1,43 +1,58 @@
 #include <iostream>
 
-#include "dummy.h"
+#include "pong.h"
 
-class DummyAgent : public aig::IAgent<aig::DummyGame>
+class TrackingAgent : public aig::IAgent<aig::PongGame>
 {
-    virtual CommandT Decide(const StateT& state, const double elapsed_time) override
+    virtual CommandT Decide(const StateT& state, double elapsed_time)
     {
-        //Pump out all them events.
+        using namespace aig;
+
+        //pump events to avoid memory usage buildup.
         while (observer.EventsAvailable())
         {
-            std::cout << observer.GetEvent() << std::endl;
+            observer.GetEvent();
         }
 
-        double x_position = state.GetProperty("x_position", _id);
 
-        if (x_position < -800.)
+        //Simple ball tracker. Works for now because velocities are equal.
+        //TODO: Implement an identity system for the AI agents and provide a proper mapping to
+        //left/right.
+        const auto ball_position = state.GetProperty(PONG_BALL, PONG_POSITION, _id);
+
+        //because left AI has _id of 0 and LEFT_PADDLE is also 0. And similarly for right (1 in both cases). Shady, yes. Will fix.
+        const auto self_position = state.GetProperty(PongObject(_id), PONG_POSITION, _id); 
+
+        if (ball_position.y > self_position.y)
         {
-            return aig::DUMMY_GO_RIGHT;
+            return PONG_GO_UP;
         }
-        else if (x_position > 800.)
+        else if (ball_position.y < self_position.y)
         {
-            return aig::DUMMY_GO_LEFT;
+            return PONG_GO_DOWN;
         }
         else
         {
-            return aig::DUMMY_DO_NOTHING;
+            return PONG_STOP;
         }
     }
 };
 
 int main(int argc, char **argv)
 {
-    aig::GameSystem<aig::DummyGame> system;
+    aig::GameSystem<aig::PongGame> system;
     
-    aig::IAgent<aig::DummyGame>* my_agent = new DummyAgent;
-    system.RegisterAgent(my_agent);
+    aig::IAgent<aig::PongGame>* agent_left = new TrackingAgent;
+    aig::IAgent<aig::PongGame>* agent_right = new TrackingAgent;
 
-    system.CreateGameWindow("Dummy Game", 600, 600);
+    system.RegisterAgent(agent_left);
+    system.RegisterAgent(agent_right);
+
+    system.CreateGameWindow("Pong", 600, 600);
     system.RunGame();
+
+    delete agent_left;
+    delete agent_right;
 
     return 0;
 }

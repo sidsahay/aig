@@ -7,6 +7,7 @@ namespace aig
 {
     class Physics
     {
+        public:
         static bool IsBoundingBoxColliding(const Geometry &a, const Geometry &b);
         static void Move(Geometry *geometry, double elapsed_time);
     };

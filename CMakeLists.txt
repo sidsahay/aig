@@ -10,13 +10,14 @@ add_executable(aigmain
         aigmain/aigmain/observer.h
         aigmain/aigmain/observer_impl.h
         aigmain/aigmain/geometry.h
-        aigmain/aigmain/geometry.cpp
         aigmain/aigmain/physics.h
-        aigmain/aigmain/geometry.cpp
+        aigmain/aigmain/physics.cpp
         aigmain/aigmain/game.h
         aigmain/aigmain/game_impl.h
         aigmain/aigmain/dummy.h
         aigmain/aigmain/dummy.cpp
+        aigmain/aigmain/pong.h
+        aigmain/aigmain/pong.cpp
         aigmain/aigmain/main.cpp)
 
 find_library(SDL2_LIB SDL2)

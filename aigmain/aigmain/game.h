@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <chrono>
+#include <string>
 
 #include "graphics.h"
 #include "observer.h"
@@ -20,6 +21,8 @@ namespace aig
         void SetId(int id);
 
         Observer<GameT> observer;
+
+        virtual ~IAgent();
 
         protected:
         int _id = 0;
