@@ -22,14 +22,19 @@
     <ClInclude Include="dummy.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_impl.h" />
+    <ClInclude Include="geometry.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="observer.h" />
     <ClInclude Include="observer_impl.h" />
+    <ClInclude Include="physics.h" />
+    <ClInclude Include="pong.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dummy.cpp" />
+    <ClCompile Include="geometry.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="physics.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

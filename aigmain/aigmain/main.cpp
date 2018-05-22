@@ -7,9 +7,9 @@ class DummyAgent : public aig::IAgent<aig::DummyGame>
     virtual CommandT Decide(const StateT& state, const double elapsed_time) override
     {
         //Pump out all them events.
-        while (EventsAvailable())
+        while (observer.EventsAvailable())
         {
-            std::cout << GetEvent() << std::endl;
+            std::cout << observer.GetEvent() << std::endl;
         }
 
         double x_position = state.GetProperty("x_position", _id);

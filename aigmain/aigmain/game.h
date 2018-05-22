@@ -9,7 +9,7 @@
 namespace aig
 {
     template <typename GameT>
-    class IAgent : public Observer<typename GameT>
+    class IAgent
     {
         public:
         using CommandT = typename GameT::CommandT;
@@ -18,6 +18,8 @@ namespace aig
 
         virtual typename GameT::CommandT Decide(const typename GameT::StateT& state, const double elapsed_time) = 0;
         void SetId(int id);
+
+        Observer<GameT> observer;
 
         protected:
         int _id = 0;
