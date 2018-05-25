@@ -58,3 +58,28 @@ Other ways to get help:
 
 * Every header file has some comments. They might help. Will add more comments later.
 * The default implementation comes with a `main.cpp` with an example agent already made. Just follow the same pattern.
+
+## Games
+General details:
+* The screen is parametrized by the usual `(x,y)` coordinate system, with the origin in the middle.
+* The game area is by default `-1000` to `1000` units in `x` and same in `y`. 
+* Game units are resolution independent.
+* For geometric objects the centre of the object is the centre of the bounding box. They are drawn this way too.
+* The physics is framerate independent because of the use of `elapsed time`. This means that the physics system takes longer steps when the frame processing time is large, which could be a problem for things like collision detection if each frame takes too long. It is as if the movement happens regardless of how long it takes to draw each frame. If the steps are too large then the physics system could give incorrect result (eg. because a large step takes an object beyond another object that it was supposed to hit, so the collision event is never detected). This is a problem if the velocity is increased too much, too. This, and the precision of `double` numbers puts fundamental limits on how fast the game can be made to go.
+
+### Pong
+Pretty classic game, doesn't need much description. Two paddles, four walls, one ball.
+
+Some details:
+* The game ends when the ball touches the left or right wall (top and bottom wall just causes it to bounce).
+* Each paddle has a velocity that you can either set to zero, set to a positive constant, or set to a negative constant. Both the constants are by default `0.9 * ball's default y velocity` i.e. the paddles move slower than the ball.
+* If the ball hits a paddle in motion (i.e. that has a nonzero velocity) the ball will be accelerated slightly in the direction of the paddle's motion (i.e. if they're going in the same direction the ball will be sped up, else it will be slowed down). You can use this to deliberately speed up or slow down the ball. This affects `y` velocity only.
+* All bounces are done by negating the corresponding velocity value.
+* Positions:
+  * The ball starts at `(0,0)`. 
+  * The paddles start at `(-600,0)` and `(600,0)`. 
+  * The wall centres are `800` units in the respective directions. 
+* Dimensions (width x height) in game units:
+    * Ball: `20` x `20`
+    * Paddles: `20` x `100`
+    * Walls: `20` in the shorter dimension and `1600` in the longer.
