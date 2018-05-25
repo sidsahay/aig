@@ -12,6 +12,7 @@ namespace aig
         double y = 0.;
     };
 
+    //Base class for all geometries. Will add more geometry types later.
     class Geometry
     {
         public:

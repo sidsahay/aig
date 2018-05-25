@@ -5,6 +5,7 @@
 
 namespace aig
 {
+    //Laughable static class for some physics operations. Will add Colliders later.
     class Physics
     {
         public:

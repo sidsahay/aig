@@ -55,8 +55,8 @@ namespace aig
         _game_state._objects[PONG_LEFT_BOUNDARY].position = Vector2(-800, 0);
         _game_state._objects[PONG_RIGHT_BOUNDARY].position = Vector2(800, 0);
 
-        _game_state._objects[PONG_LEFT_PADDLE].bounding_box_extent = Vector2(20, 100);
-        _game_state._objects[PONG_RIGHT_PADDLE].bounding_box_extent = Vector2(20, 100);
+        _game_state._objects[PONG_LEFT_PADDLE].bounding_box_extent = Vector2(20, 200);
+        _game_state._objects[PONG_RIGHT_PADDLE].bounding_box_extent = Vector2(20, 200);
         _game_state._objects[PONG_BALL].bounding_box_extent = Vector2(20, 20);
         _game_state._objects[PONG_TOP_BOUNDARY].bounding_box_extent = Vector2(1600, 20);
         _game_state._objects[PONG_BOTTOM_BOUNDARY].bounding_box_extent = Vector2(1600, 20);
@@ -70,6 +70,7 @@ namespace aig
     {
         //Handle events
         //TODO: Refactor to remove state changes from this code.
+        //TODO: Get rid of magic constants.
         while (_observer.EventsAvailable())
         {
             auto event = _observer.GetEvent();
@@ -80,18 +81,29 @@ namespace aig
                 if (target == PONG_LEFT_PADDLE || target == PONG_RIGHT_PADDLE)
                 {
                     _game_state._objects[PONG_BALL].velocity.x *= -1;
+                    auto similatiy_multiplier = (_game_state._objects[target].velocity.y * _game_state._objects[PONG_BALL].velocity.y > 0) ? 1 : -1;
+                    auto ball_multiplier = (_game_state._objects[PONG_BALL].velocity.y > 0) ? 1 : -1;
+                    _game_state._objects[PONG_BALL].velocity.y += similatiy_multiplier * ball_multiplier * PONG_NORM_SPEED / 10;
                 }
                 else if (target == PONG_TOP_BOUNDARY || target == PONG_BOTTOM_BOUNDARY)
                 {
                     _game_state._objects[PONG_BALL].velocity.y *= -1;
                 }
+                std::cout << "[Hit] Object1: " << event.objects[0] << ", Object2: " << event.objects[1] << "\n";
             } 
             else if (event.action == PONG_GAME_OVER)
             {
+                if (event.objects[1] == PONG_LEFT_BOUNDARY)
+                {
+                    std::cout << "[Game Over] Right player won.";
+                }
+                else
+                {
+                    std::cout << "[Game Over] Left player won.";
+                }
+
                 _has_ended = true;
             }
-
-            std::cout << "[Event] Action: " << event.action << ", Object1: " << event.objects[0] << ", Object2: " << event.objects[1] << "\n";
         }
     }
 
@@ -113,11 +125,11 @@ namespace aig
             switch (command)
             {
             case PONG_GO_UP:
-                _game_state._objects[i].velocity = Vector2(0, PONG_NORM_SPEED);
+                _game_state._objects[i].velocity = Vector2(0, PONG_NORM_SPEED * 0.9);
                 break;
 
             case PONG_GO_DOWN:
-                _game_state._objects[i].velocity = Vector2(0, -PONG_NORM_SPEED);
+                _game_state._objects[i].velocity = Vector2(0, -PONG_NORM_SPEED * 0.9);
                 break;
 
             case PONG_STOP:

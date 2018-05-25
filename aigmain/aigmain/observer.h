@@ -4,11 +4,14 @@
 
 namespace aig
 {
+    //Observers receive events from ObservationTargets.
     template <typename GameT>
     class Observer
     {
         public:
         bool EventsAvailable();
+
+        //Call this ONLY after checking whether events are available via EventsAvailable()
         typename GameT::EventT GetEvent();
 
         void PushEvent(typename GameT::EventT event);
@@ -17,7 +20,7 @@ namespace aig
         std::deque<typename GameT::EventT> _event_queue;
     };
 
-    //An Observer observes an ObservationTarget for events, see?
+    //ObservationTargets emit events for Observers to receive.
     template <typename GameT>
     class ObservationTarget
     {
