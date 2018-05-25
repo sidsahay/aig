@@ -52,6 +52,8 @@ Therefore, to implement your own agent do the following
 * Register the agents with the GameSystem.
 * Run the game via the game system.
 
+Another way to get information from inside the `Decide` method is the events system, implemented using the `Observer` and `ObservationTarget` classes. Each `ObservationTarget` has a list of `Observer`s to which it can push events. Note: `Observer`s cannot push events (duh). There is a default `ObservationTarget` inside each game class and an `Observer` inside each `IAgent` (it's called `observer`). The agent `Observer`s are wired up to the game's `ObservationTarget` automatically by the game system, so every agent will recieve a copy of every event (this will be changed later on with support for multiple event streams). Events can help look for things like "this ball hit that paddle" and can be used as another information input to your AI algorithm. Note: please clear the agent's event queue every frame even if you're not using events, otherwise the queue will just keep getting longer and will eat up memory.
+
 Other ways to get help:
 
 * Every header file has some comments. They might help. Will add more comments later.
