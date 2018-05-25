@@ -81,5 +81,5 @@ Some details:
   * The wall centres are `800` units in the respective directions. 
 * Dimensions (width x height) in game units:
     * Ball: `20` x `20`
-    * Paddles: `20` x `100`
+    * Paddles: `20` x `200`
     * Walls: `20` in the shorter dimension and `1600` in the longer.
